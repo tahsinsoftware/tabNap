@@ -1,23 +1,38 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 function IndexPopup() {
   const [isOn, setIsOn] = useState(false)
+
+  // On component load, read from localStorage
+  useEffect(() => {
+    const savedState = localStorage.getItem("tabNapState")
+    if (savedState === "on") {
+      setIsOn(true)
+      // Also tell background to start loop if not already
+      if (typeof chrome !== "undefined" && chrome.runtime?.sendMessage) {
+        chrome.runtime.sendMessage({ type: "START_LOOP" }, (res) => {
+          console.log("Restored ON state:", res)
+        })
+      }
+    }
+  }, [])
 
   const handleToggle = () => {
     setIsOn((prev) => {
       const newState = !prev
       console.log(newState ? "ON clicked" : "OFF clicked")
 
-      if (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.sendMessage) {
+      if (typeof chrome !== "undefined" && chrome.runtime?.sendMessage) {
         chrome.runtime.sendMessage(
           { type: newState ? "START_LOOP" : "STOP_LOOP" },
           (res) => {
             console.log("Background response:", res)
           }
         )
-      } else {
-        console.warn("chrome.runtime not available")
       }
+
+      // Save to localStorage
+      localStorage.setItem("tabNapState", newState ? "on" : "off")
 
       return newState
     })

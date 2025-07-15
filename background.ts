@@ -1,4 +1,5 @@
-const tabIdleMap: Record<number, number> = {} // tabId => minutesInactive
+// tabId => minutesInactive
+const tabIdleMap: Record<number, number> = {} 
 
 let loopRunning = false
 let loopInterval: NodeJS.Timeout
@@ -29,7 +30,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             }
           })
         })
-      }, 60_000) // every 1 min
+        // every 1 min
+      }, 60_000) 
     }
 
     sendResponse({ status: "loop started" })
