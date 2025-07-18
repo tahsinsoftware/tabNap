@@ -1,7 +1,7 @@
 {
   "name": "tab-nap",
   "displayName": "Tab nap",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "auto sleep tabs if inactive for 5 minuts in brave made spacially for me hehe",
   "author": "tahsinzidane",
   "scripts": {

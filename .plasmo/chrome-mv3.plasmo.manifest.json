@@ -19,7 +19,7 @@
   },
   "version": "0.0.1",
   "author": "tahsinzidane",
-  "name": "DEV | Tab nap",
+  "name": "Tab nap",
   "description": "auto sleep tabs if inactive for 5 minuts in brave made spacially for me hehe",
   "background": {
     "service_worker": "./static/background/index.ts"
