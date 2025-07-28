@@ -1,4 +1,3 @@
-// plasmo.override.ts
 export const manifest = {
   icons: {
     16: "assets/processor16.png",
