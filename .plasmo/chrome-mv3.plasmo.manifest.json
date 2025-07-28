@@ -17,7 +17,7 @@
     },
     "default_popup": "./popup.html"
   },
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "tahsinzidane",
   "name": "Tab nap",
   "description": "auto sleep tabs if inactive for 5 minuts in brave made spacially for me hehe",

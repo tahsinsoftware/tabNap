@@ -1,13 +1,38 @@
-# 💤 tabNap v0.1.0 
+# 💤 tabNap v0.2.0 
 
 **A lightweight Chromium-based browser extension to automatically put inactive tabs to sleep after 5 minutes — saving memory and boosting your browsing performance.**
 
 ---
 
+## 🚀 Feature Update (v0.2.0)
+
+In version **v0.2.0**, Tab Nap just got smarter.
+
+### 🔄 What’s New
+
+* **Ignore List Support**
+  You no longer need to *pin* tabs to prevent them from being discarded.
+  Now, you can simply **add websites to an ignore list**—those tabs will stay safe, even when inactive.
+
+* **Settings Panel**
+  Click “See More Settings” in the popup to manage your ignored sites:
+
+  * Type or paste any website URL
+  * Hit **Save Site**
+  * It’s added to your ignore list instantly
+
+### ✅ Example Use Case
+
+Want to keep WhatsApp Web or Notion running in the background?
+Just add `https://web.whatsapp.com` or `https://notion.so` to the list. Tab Nap will leave them alone.
+
+
+
 ## 🚀 Features
 
 - Automatically hibernates inactive tabs after 5 minutes  
-- Skips pinned tabs (they stay awake)  
+- Skips pinned tabs (they stay awake)
+- Now supports custom ignore list for domains you don’t want discarded
 - Runs silently in the background  
 - Minimal UI to toggle the feature ON/OFF  
 - Lightweight and efficient

@@ -8,26 +8,26 @@ function IndexPopup() {
   const [ignoredSites, setIgnoredSites] = useState<string[]>([])
 
   useEffect(() => {
-    console.log("[Popup] useEffect: Initializing popup")
+    // console.log("[Popup] useEffect: Initializing popup")
 
     const savedState = localStorage.getItem("tabNapState")
-    console.log("[Popup] Restored tabNapState:", savedState)
+    // console.log("[Popup] Restored tabNapState:", savedState)
     if (savedState === "on") {
       setIsOn(true)
       sendStatus("START_LOOP")
     }
 
     const savedSites = JSON.parse(localStorage.getItem("ignoredSites") || "[]")
-    console.log("[Popup] Loaded ignored sites:", savedSites)
+    // console.log("[Popup] Loaded ignored sites:", savedSites)
     setIgnoredSites(savedSites)
   }, [])
 
   const sendStatus = (type: "START_LOOP" | "STOP_LOOP") => {
-    console.log(`[Popup] Sending message to background: ${type}`)
+    // console.log(`[Popup] Sending message to background: ${type}`)
 
     if (chrome?.runtime?.sendMessage) {
       chrome.runtime.sendMessage({ type }, (res) => {
-        console.log("[Popup] Background response:", res)
+        // console.log("[Popup] Background response:", res)
         if (res?.status === "loop started") {
           setStatusMsg("Extension is running ✅")
         } else if (res?.status === "loop stopped") {
@@ -36,29 +36,25 @@ function IndexPopup() {
           setStatusMsg("Extension status unknown ❓")
         }
       })
-    } else {
-      console.warn("[Popup] chrome.runtime.sendMessage is not available")
     }
   }
 
   const handleToggle = () => {
     const newState = !isOn
-    console.log(`[Popup] handleToggle: Setting state to ${newState ? "ON" : "OFF"}`)
+    // console.log(`[Popup] handleToggle: Setting state to ${newState ? "ON" : "OFF"}`)
     setIsOn(newState)
 
     sendStatus(newState ? "START_LOOP" : "STOP_LOOP")
     localStorage.setItem("tabNapState", newState ? "on" : "off")
-    console.log("[Popup] Saved tabNapState to localStorage:", newState ? "on" : "off")
+    // console.log("[Popup] Saved tabNapState to localStorage:", newState ? "on" : "off")
   }
 
   const extractDomain = (url: string) => {
     try {
       const u = new URL(url)
-      const domain = u.hostname.replace("www.", "").split(".")[0]
-      console.log(`[Popup] Extracted domain from ${url}: ${domain}`)
-      return domain
+      return u.hostname.replace("www.", "").split(".")[0]
     } catch {
-      console.warn(`[Popup] Invalid URL passed to extractDomain: ${url}`)
+      // console.warn(`[Popup] Invalid URL passed to extractDomain: ${url}`)
       return ""
     }
   }
@@ -67,25 +63,22 @@ function IndexPopup() {
     const trimmed = siteInput.trim()
     if (!trimmed) return
 
-    console.log("[Popup] Adding ignored site:", trimmed)
     const updated = [...ignoredSites, trimmed]
     setIgnoredSites(updated)
     localStorage.setItem("ignoredSites", JSON.stringify(updated))
-    console.log("[Popup] Updated ignoredSites in localStorage:", updated)
 
     chrome.runtime.sendMessage({ type: "UPDATE_IGNORED_SITES", sites: updated })
     setSiteInput("")
   }
 
   const handleRemoveSite = (site: string) => {
-    console.log("[Popup] Removing site from ignored list:", site)
     const updated = ignoredSites.filter((s) => s !== site)
     setIgnoredSites(updated)
     localStorage.setItem("ignoredSites", JSON.stringify(updated))
-    console.log("[Popup] Updated ignoredSites in localStorage:", updated)
 
     chrome.runtime.sendMessage({ type: "UPDATE_IGNORED_SITES", sites: updated })
   }
+
 
   return (
     <div
